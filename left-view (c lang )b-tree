@@ -1,0 +1,53 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+  int data;  
+  struct node* left;    
+  struct node* right;    
+};
+
+struct node* newNode(int val){
+ struct node* node = (struct node*)malloc(sizeof(struct node));
+ node->data = val;   
+ node->left = NULL;    
+ node->right = NULL;    
+ return node;
+}
+//left view of binary tree
+void helper(struct node* root, int lvl, int* mx_lvl){
+
+if(root==NULL){
+    return;
+}
+
+if(*mx_lvl < lvl){
+    printf("%d", root->data);
+    *mx_lvl = lvl;
+}
+
+helper(root->left, lvl+1, mx_lvl);    
+helper(root->right, lvl+1, mx_lvl);    
+}
+
+void leftView(struct node* root){
+    int mx_lvl = 0;
+    helper(root, 1, &mx_lvl);
+}
+
+int main()
+{
+    struct node* root = newNode(10);
+    root->left = newNode(2);
+    root->right = newNode(3);
+    root->left->left = newNode(7);
+    root->left->right = newNode(8);
+    root->right->right = newNode(15);
+    root->right->left = newNode(12);
+    root->right->right->left = newNode(14);
+ 
+    leftView(root);
+ 
+    return 0;
+}
+
